@@ -80,7 +80,9 @@ cntin = function(y, z, l, h) # theta_sh
 		{
 			if(i != j)
 			{
-				temp = s.h(t(y[i, ] - y[j, ]) %*% l, h) * (2 * s.h((z[i] - z[j]), h) - 1) + 1 - s.h((z[i] - z[j]), h)
+				# formula 2.5
+				temp = s.h(t(y[i, ] - y[j, ]) %*% l, h) * s.h((z[i] - z[j]), h) + (1 - s.h(t(y[i, ] - y[j, ]) %*% l, h)) * (1 - s.h((z[i] - z[j]), h))
+				# s.h(t(y[i, ] - y[j, ]) %*% l, h) * (2 * s.h((z[i] - z[j]), h) - 1) + 1 - s.h((z[i] - z[j]), h)
 				psij = psij + temp
 			}
 		}
@@ -93,13 +95,13 @@ cntin = function(y, z, l, h) # theta_sh
 }
 
 # ------------------------------------------------
-
-d.theta.sh.h.p = function(y, z, l, h) # 微分, step 4
+# step 1
+d.theta.sh.h.p = function(y, z, l, h)
 {
 	n = dim(y)[1]
 	sij = temp = 0
 	d.theta.sh.h.p = rep(0, dim(y)[2])
-
+	# formula 2.6
 	for(i in 1:n)
 	{
 		for(j in 1:n)
@@ -143,10 +145,16 @@ optimal.delta = function(y, z, l, h, ind.d.l)
 
 # ------------------------------------------------
 
-cgAUC = function(x, z, h, delta = 1, auto = FALSE, tau = 1)
+cgAUC = function(x, z, h, delta = 1, auto = FALSE, tau = 1, scale = 1)
 {
-	x = scale(x);
-	z = scale(z);
+	if(scale == 0){
+		x = as.matrix(x);
+		z = as.matrix(z);
+	}
+	else{
+		x = scale(x);
+		z = scale(z);
+	}
 	
 	conv = FALSE # 是否收斂，設定為「否」
 	n = dim(x)[1] # 取出X矩陣的列數目
@@ -154,8 +162,7 @@ cgAUC = function(x, z, h, delta = 1, auto = FALSE, tau = 1)
 	cntin.ri = dscrt.ri = rep(0, p)
 	id = diag(p)
 
-	for(i in 1:p)
-	{
+	for(i in 1:p){
 		dscrt.ri[i] = dscrt(x, z, id[i, ])$theta.h.p
 		cntin.ri[i] = cntin(x, z, id[i, ], h)$theta.sh.h.p
 	}
@@ -171,14 +178,14 @@ cgAUC = function(x, z, h, delta = 1, auto = FALSE, tau = 1)
 	theta.sh.h.p = 0
 	l = id[max.x, ]
 
-	while(conv == FALSE)
-	{
+	# TGDM
+	while(conv == FALSE){
+		# Step 1
 		d.l = d.theta.sh.h.p(y, z, l, h)
-		max.d.l = max(d.l)
-		ind.d.l = ifelse(d.l >= (tau * max.d.l), 1, 0) * d.l
-		
-		if (auto == TRUE)
-		{
+		max.d.l = max(abs(d.l))
+		ind.d.l = ifelse(abs(d.l) >= (tau * max.d.l), 1, 0) * d.l
+		# Step 3
+		if (auto == TRUE){
 			delta = optimal.delta(y, z, l, h, ind.d.l)
 		}
 

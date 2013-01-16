@@ -6,7 +6,7 @@ Calculate AUC when gold standard is continuous with large variables.}
 \description{
 The cgAUC can calculate the AUC-type measure of Obuchowski(2006) when gold standard is continuous, and find the optimal linear combination of variables with respect to this measure.}
 \usage{
-cgAUC(x, z, h, delta = 1, auto = FALSE, tau = 1)
+cgAUC(x, z, h, delta = 1, auto = FALSE, tau = 1, scale = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,6 +22,8 @@ The parameter be used in TGDM. The default value is one.}
 Find the optimal delta in TGDN using cross-validation. If the auto is TRUE. The default is FALSE.}
   \item{tau}{
 The parameter used in TGDM. The default value is one.}
+  \item{scale}{
+Scaling data when scale = 1, no scaling data when scale = 0. The default value is 1.}
 }
 \details{
 In this package, we use the TGDM to find the optimal linear combination of variables in order to maximize the AUC-type measure. Before using this function, all of variables, including gold standard variable, should be standardized first. Below are parameters used in the algorithm:}
@@ -38,8 +40,8 @@ In this package, we use the TGDM to find the optimal linear combination of varia
 }
 \references{
 Chang, YCI. Maximizing an ROC type measure via linear combination of markers when the gold reference is continuous. Statistics in Medicine 2012.\cr
-Obuchowski NA. An ROC-type measure of diagnostic accuracy when the gold standard is continuousscale. Statistics in Medicine 2006; 25:481 493.\cr
-Obuchowski N. Estimating and comparing diagnostic tests accuracy when the gold standard is not binary. Statistics in Medicine 2005; 20:3261 3278.\cr
+Obuchowski NA. An ROC-type measure of diagnostic accuracy when the gold standard is continuous-scale. Statistics in Medicine 2006; 25:481--493.\cr
+Obuchowski N. Estimating and comparing diagnostic tests accuracy when the gold standard is not binary. Statistics in Medicine 2005; 20:3261--3278.\cr
 Friedman JH, Popescu BE. Gradient directed regularization for linear regression and classification. Technical Report, Department of Statistics, Stanford University, 2004.\cr
 }
 \author{
@@ -49,15 +51,15 @@ Yu-chia Chang}
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
 
-# n = 30; p = 3;
+# n = 100; p = 5;
 # r.x = matrix(rnorm(n * p), , p) # raw data
 # r.z = r.x[ ,1] + rnorm(n) # gold standard
 # x = scale(r.x) # standardized of raw data
 # z = scale(r.z) # standardized of gold standard
 # h = n^(-1 / 2)
-# t1 = cgAUC(r.x, r.z, h, delta = 1, auto = FALSE, tau = 1) # the delta be constant
+# t1 = cgAUC(r.x, r.z, h, delta = 1, auto = FALSE, tau = 1, scale = 1) # the delta be constant
 # t1
-# t2 = cgAUC(r.x, r.z, h, delta = 1, auto = TRUE, tau = 1) # the delta be variable
+# t2 = cgAUC(r.x, r.z, h, delta = 1, auto = TRUE, tau = 1, scale = 1) # the delta be variable
 # t2
 
 ## The function is currently defined as
