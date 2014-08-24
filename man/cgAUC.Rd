@@ -28,6 +28,7 @@ Scaling data when scale = 1, no scaling data when scale = 0. The default value i
 \details{
 In this package, we use the TGDM to find the optimal linear combination of variables in order to maximize the AUC-type measure. Before using this function, all of variables, including gold standard variable, should be standardized first. Below are parameters used in the algorithm:}
 \value{
+\item{Rev}{When Rev = 0 means l * 1; otherwise, l * -1.}
 \item{l}{The estimate of coefficients for the optimal linear combination of variables.}
 \item{theta.sh.h.p}{The estimate of the theta of Chang(2012) for the optimal linear combination of variables.}
 \item{theta.sh.h.p.var}{The estimate of variance for the theta of Chang(2012).}

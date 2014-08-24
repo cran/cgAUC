@@ -2,20 +2,23 @@
 \alias{cgAUC-package}
 \docType{package}
 \title{
-Calculate AUC when gold standard is continuous with large variables.}
+Calculate AUC when gold standard is continuous with large variables.
+}
 \description{
-In this package, the cgAUC is used to calculate the AUC-type measure raised in Obuchowski(2006) when gold standard is continuous.}
+In this package, the cgAUC is used to calculate the AUC-type measure raised in Obuchowski(2006) when gold standard is continuous.
+}
 \details{
 \tabular{ll}{
 Package: \tab cgAUC\cr
 Type: \tab Package\cr
-Version: \tab 1.1.2\cr
-Date: \tab 2013-01-16\cr
-License: \tab What license is it under?\cr
+Version: \tab 1.2.1\cr
+Date: \tab 2014-08-24\cr
+License: \tab GPL (>=2)\cr
 }
 }
 \author{
-Yu-chia Chang
+Yuan-chin I. Chang, Yu-chia Chang, and Ling-wan Chen
+
 Maintainer: Yu-chia Chang <curare7177@gmail.com>
 }
 \references{
@@ -24,7 +27,9 @@ Obuchowski NA. An ROC-type measure of diagnostic accuracy when the gold standard
 Obuchowski N. Estimating and comparing diagnostic tests accuracy when the gold standard is not binary. Statistics in Medicine 2005; 20:3261--3278.\cr
 Friedman JH, Popescu BE. Gradient directed regularization for linear regression and classification. Technical Report, Department of Statistics, Stanford University, 2004.\cr
 }
+\keyword{ cgAUC }
 \examples{
+%% ~~ simple examples of the most important functions ~~
 # n = 100; p = 5;
 # r.x = matrix(rnorm(n * p), , p) # raw data
 # r.z = r.x[ ,1] + rnorm(n) # gold standard

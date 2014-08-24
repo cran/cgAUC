@@ -1,12 +1,12 @@
-\name{d.theta.sh.h.p}
-\alias{d.theta.sh.h.p}
+\name{c_d_theta_sh_h_p}
+\alias{c_d_theta_sh_h_p}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-d.theta.sh.h.p}
+c_d_theta_sh_h_p}
 \description{
-Compute the d.theta.sh.h.p.}
+Compute the c_d_theta_sh_h_p.}
 \usage{
-d.theta.sh.h.p(y, z, l, h)
+c_d_theta_sh_h_p(y, z, l, h)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,7 +20,7 @@ Linear combination. A vector.}
 The value of h falls into (n^(-1/2), n^(-1/5)).}
 }
 \details{
-Compute the d.theta.sh.h.p. Come from differential.}
+Compute the c_d_theta_sh_h_p Come from differential.}
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
@@ -40,25 +40,10 @@ Yu-chia Chang}
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (y, z, l, h) 
-{
-    n = dim(y)[1]
-    sij = temp = 0
-    d.theta.sh.h.p = rep(0, dim(y)[2])
-    for (i in 1:n) {
-        for (j in 1:n) {
-            if (i != j) {
-                temp = (s.h(t(y[i, ] - y[j, ]) \%*\% l, h) * (1 - 
-                  s.h(t(y[i, ] - y[j, ]) \%*\% l, h)) * (2 * s.h(z[i] - 
-                  z[j], h) - 1) * (y[i, ] - y[j, ]))/h
-                sij = sij + temp
-            }
-        }
-    }
-    d.theta.sh.h.p = sij/(n * (n - 1))
-    return(d.theta.sh.h.p)
-  }
+function(y, z, l, h) {
+    .Call('cgAUC_c_d_theta_sh_h_p', PACKAGE = 'cgAUC', y, z, l, h)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ d.theta.sh.h.p }
+\keyword{ c_d_theta_sh_h_p }

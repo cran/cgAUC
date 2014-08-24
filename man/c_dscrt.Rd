@@ -1,26 +1,29 @@
-\name{s.h}
-\alias{s.h}
+\name{c_dscrt}
+\alias{c_dscrt}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-s.h}
+c_dscrt}
 \description{
-Smooth function.}
+discrete function, when variable is discrete.}
 \usage{
-s.h(t, h)
+c_dscrt(y, z, l)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{t}{
-A value, the difference between any two subjects.}
-  \item{h}{
-The value of h falls into (n^(-1/2), n^(-1/5)).}
+  \item{y}{
+The potential variables. It is a matrix with column of values of a variables. It should be standardized in this application.}
+  \item{z}{
+The gold standard variable. It should be standardized.}
+  \item{l}{
+Linear combination. A vector.}
 }
 \details{
-Smooth function.}
+Discrete function, when variable is discrete.}
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
-\item{s.h}{The value of smooth function.}
+\item{theta.h.p}{The estimate of theta when variable is discrete.}
+\item{var}{The variance of estimate of theta.}
 }
 \references{
 Chang, YCI. Maximizing an ROC type measure via linear combination of markers when the gold reference is continuous. Statistics in Medicine 2012.\cr
@@ -36,11 +39,10 @@ Yu-chia Chang}
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (t, h) 
-{
-    1/(1 + exp(-t/h))
-  }
+function(y, z, l) {
+    .Call('cgAUC_c_dscrt', PACKAGE = 'cgAUC', y, z, l)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ s.h }
+\keyword{ c_dscrt }

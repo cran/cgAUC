@@ -1,29 +1,30 @@
-\name{dscrt}
-\alias{dscrt}
+\name{c_cntin}
+\alias{c_cntin}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-dscrt}
+c_cntin}
 \description{
-discrete function, when variable is discrete.}
+Continue function, when variable was continue.}
 \usage{
-dscrt(y, z, l)
+c_cntin(y, z, l, h)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{y}{
-The potential variables. It is a matrix with column of values of a variables. It should be standardized in this application.}
+  \item{y}{The potential variables. It is a matrix with column of values of a variables. It should be standardized in this application.
+}
   \item{z}{
 The gold standard variable. It should be standardized.}
   \item{l}{
 Linear combination. A vector.}
+  \item{h}{
+The value of h falls into (n^(-1/2), n^(-1/5)).}
 }
-\details{
-Discrete function, when variable is discrete.}
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use
-\item{theta.h.p}{The estimate of theta when variable is discrete.}
-\item{var}{The variance of estimate of theta.}
+\item{theta.sh.h.p}{The estimate of the theta of Chang(2012).}
+\item{var}{The variance of estimate of the theta of Chang(2012).}
+
 }
 \references{
 Chang, YCI. Maximizing an ROC type measure via linear combination of markers when the gold reference is continuous. Statistics in Medicine 2012.\cr
@@ -39,30 +40,10 @@ Yu-chia Chang}
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (y, z, l) 
-{
-    n = length(z)
-    psii = rep(0, n)
-    temp = 0
-    y = y \%*\% l
-    for (i in 1:n) {
-        psij = 0
-        for (j in 1:n) {
-            if (i != j) {
-                temp = ifelse(((y[i] - y[j]) * (z[i] - z[j])) > 
-                  0, 1, ifelse(((y[i] - y[j]) == 0 || (z[i] - 
-                  z[j]) == 0), 0.5, 0))
-                psij = psij + temp
-            }
-        }
-        psii[i] = psij
-    }
-    theta.h.p = sum(psii)/(n * (n - 1))
-    var = sum(((psii/(n - 1)) - theta.h.p)^2)/((n/2) * ((n/2) - 
-        1))
-    return(list(theta.h.p = theta.h.p, var = var))
-  }
+function(y, z, l, h) {
+    .Call('cgAUC_c_cntin', PACKAGE = 'cgAUC', y, z, l, h)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ dscrt }
+\keyword{ c_cntin }
